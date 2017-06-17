@@ -4,21 +4,18 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>#</th>
-        <th>Header</th>
-        <th>Header</th>
-        <th>Header</th>
-        <th>Header</th>
+        <th>Name</th>
+        <th>Since</th>
       </tr>
     </thead>
     <tbody>
+      {{#each friends as |friend|}}
       <tr>
-        <td>1,001</td>
-        <td>Lorem</td>
-        <td>ipsum</td>
-        <td>dolor</td>
-        <td>sit</td>
+        <td>{{friend.firstName}}</td>
+        <td>{{friend.since}}</td>
       </tr>
+      {{/each}}
+
     </tbody>
   </table>
 </div>
