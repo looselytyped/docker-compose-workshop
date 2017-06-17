@@ -38,7 +38,7 @@ dependencies {
 
 mainClassName = 'io.vertx.core.Launcher'
 def mainVerticleName = 'com.looselytyped.MainVerticle'
-def watchForChange = 'src/**/*.java'
+def watchForChange = 'src/**/*.java,src/**/*.hbs'
 
 // OS specific command
 
@@ -46,7 +46,7 @@ def doOnChange
 if (System.getProperty("os.name").toLowerCase().contains("windows")) {
   doOnChange = '.\\gradlew shadowJar'
 } else {
-  doOnChange = '../gradlew shadowJar'
+  doOnChange = './gradlew shadowJar'
 }
 
 shadowJar {
