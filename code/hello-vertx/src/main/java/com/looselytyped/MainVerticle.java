@@ -52,7 +52,7 @@ public class MainVerticle extends AbstractVerticle {
 
   private void setUpMongo() {
     JsonObject mongoconfig = new JsonObject()//
-        .put("connection_string", "mongodb://localhost:27017")//
+        .put("connection_string", "mongodb://mongo:27017")//
         .put("db_name", "friends");
     client = MongoClient.createNonShared(vertx, mongoconfig);
   }
