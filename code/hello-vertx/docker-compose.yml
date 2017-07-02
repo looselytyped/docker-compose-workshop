@@ -3,7 +3,7 @@ services:
   mongo:
     image: mongo:3.4.5
     networks:
-        - app-net
+      - app-net
 
   app:
     build: .
