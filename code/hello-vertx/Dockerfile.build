@@ -1,5 +1,21 @@
 FROM openjdk:8u131-jdk
 
+ARG PROJECT_VERSION
+ENV VERSION=${PROJECT_VERSION:-3.2}
+ENV GRADLE_HOME=/gradle-$VERSION
+ENV PATH=$PATH:$GRADLE_HOME/bin
+
+RUN apt-get update \
+    && apt-get install -y \
+       unzip \
+       curl \
+    && curl -L https://services.gradle.org/distributions/gradle-$VERSION-bin.zip -o gradle-$VERSION-bin.zip \
+    && unzip gradle-$VERSION-bin.zip \
+    && echo "export GRADLE_HOME=$GRADLE_HOME" >> $HOME/.bashrc \
+    && echo "export PATH=$PATH:$GRADLE_HOME/bin" >> $HOME/.bashrc \
+    && /bin/bash -c 'source $HOME/.bashrc' \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /code
 ADD . ./
 
