@@ -1,0 +1,6 @@
+FROM openjdk:8u131-jdk
+
+WORKDIR /code
+ADD . ./
+
+RUN ["./gradlew", "shadowJar", "--no-daemon"]
