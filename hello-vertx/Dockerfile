@@ -1,4 +1,4 @@
-FROM openjdk:8u131-jre
+FROM adoptopenjdk/openjdk11:x86_64-ubuntu-jre-11.0.2.9
 
 RUN apt-get update \
   && apt-get install -y \

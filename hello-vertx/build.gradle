@@ -1,20 +1,8 @@
-// dependencies for build script itself
-buildscript {
-  repositories {
-    maven {
-      url 'https://plugins.gradle.org/m2/'
-    }
-    mavenCentral()
-    jcenter()
-  }
-
-  dependencies {
-    classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.4'
-  }
+plugins {
+  id "com.github.johnrengelman.shadow" version "6.1.0"
 }
 
 apply plugin: 'application'
-apply plugin: 'com.github.johnrengelman.shadow'
 
 // project level dependencies
 repositories {

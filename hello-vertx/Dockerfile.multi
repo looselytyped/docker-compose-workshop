@@ -1,14 +1,47 @@
-FROM openjdk:8u131-jdk as builder
+ARG JDK_VERSION=11.0.5-jdk
+ARG JRE_VERSION=11.0.5-jre
+
+# ——— Base building image —————————————————————————————————————————————————————
+FROM openjdk:${JDK_VERSION} as base
+
+# ——— Get the dependencies ————————————————————————————————————————————————————
+FROM base as gradle
 WORKDIR /code
-ADD . ./
-RUN ["./gradlew", "shadowJar", "--no-daemon"]
+COPY *.gradle gradle.* gradlew ./
+COPY gradle ./gradle
+RUN ./gradlew -q --no-daemon build || return 0
+
+# ——— Get the source ——————————————————————————————————————————————————————————
+FROM gradle as sourced
+COPY src/ src/
+
+# ——— Build/test ——————————————————————————————————————————————————————————————
+FROM sourced as builder
+WORKDIR /code
+COPY src/ src/
+RUN ["./gradlew", "-q", "--no-daemon", "shadowJar"]
 
 
-FROM openjdk:8u131-jre
+# ——— Final Image —————————————————————————————————————————————————————————————
+FROM openjdk:${JRE_VERSION}
+EXPOSE 8080
+
+LABEL org.label-schema.description="This is a demo of a multi-stage Dockerfile" \
+  org.label-schema.docker.cmd="\
+  docker run -d \
+  -p 8080:8080 \
+  --name <container-name> \
+  <image-name>" \
+  org.label-schema.docker.debug="docker exec -it <container-name> bash" \
+  org.label-schema.name="multi-stage-dockerfile-demo" \
+  org.label-schema.vcs-url="https://github.com/looselytyped/my-awesome-app" \
+  org.label-schema.vendor="DefMacro Software LLC" \
+  org.label-schema.schema-version="1.0.0"
+
 RUN apt-get update \
   && apt-get install -y \
   netcat  \
   && apt-get clean
-EXPOSE 8080
+
 COPY --from=builder /code/build/libs/docker-workshop-0.0.1-SNAPSHOT-fat.jar /var/app.jar
 CMD ["java", "-jar", "/var/app.jar"]
