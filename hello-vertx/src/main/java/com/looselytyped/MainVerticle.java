@@ -1,7 +1,8 @@
 package com.looselytyped;
 
+import java.util.concurrent.Future;
+
 import io.vertx.core.AbstractVerticle;
-import io.vertx.core.Future;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.mongo.MongoClient;
@@ -44,7 +45,7 @@ public class MainVerticle extends AbstractVerticle {
   }
 
   private void dynamicPages(Router router) {
-    HandlebarsTemplateEngine hbsEngine = HandlebarsTemplateEngine.create();
+    HandlebarsTemplateEngine hbsEngine = HandlebarsTemplateEngine.create(vertx);
     hbsEngine.setMaxCacheSize(0);
     TemplateHandler templateHandler = TemplateHandler.create(hbsEngine);
     router.getWithRegex(".+\\.hbs").handler(templateHandler);
