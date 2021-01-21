@@ -1,9 +1,13 @@
-version: "3"
+version: "3.7"
 services:
   mongo:
-    image: mongo:3.4.5
+    build:
+      context: .
+      dockerfile: Dockerfile.mongodb
     networks:
-      - app-net
+      - service
+    volumes:
+      - mongo-drive:/data/db
 
   app:
     build:
@@ -14,7 +18,8 @@ services:
     depends_on:
       - mongo
     networks:
-      - app-net
+      - service
+      - frontend
 
   nginx:
     image: nginx:1.19.6-alpine
@@ -25,7 +30,11 @@ services:
     ports:
       - "8080:8080"
     networks:
-      - app-net
+      - frontend
 
 networks:
-  app-net:
+  service:
+  frontend:
+
+volumes:
+  mongo-drive:

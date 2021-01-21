@@ -10,6 +10,9 @@ import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.handler.TemplateHandler;
 import io.vertx.ext.web.templ.handlebars.HandlebarsTemplateEngine;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 public class MainVerticle extends AbstractVerticle {
 
   private static final int PORT = 8080;
@@ -18,26 +21,26 @@ public class MainVerticle extends AbstractVerticle {
   @Override
   public void start(Promise<Void> startPromise) throws Exception {
     setUpMongo();
-    insertSomeData();
+    // insertSomeData();
 
     Router router = Router.router(vertx);
     staticHandler(router);
     router.get("/friends.hbs") //
-      .handler(this::getFriends) //
-      .failureHandler(event -> System.out.println(event.failure()));
+        .handler(this::getFriends) //
+        .failureHandler(event -> System.out.println(event.failure()));
     dynamicPages(router);
 
     vertx.createHttpServer()//
-      .requestHandler(router)//
-      .listen(PORT, http -> {
-        if (http.succeeded()) {
-          System.out.println("HTTP server started on port 8888");
-          startPromise.complete();
-        } else {
-          System.out.println(http.cause());
-          startPromise.fail(http.cause());
-        }
-      });
+        .requestHandler(router)//
+        .listen(PORT, http -> {
+          if (http.succeeded()) {
+            System.out.println("HTTP server started on port 8888");
+            startPromise.complete();
+          } else {
+            System.out.println(http.cause());
+            startPromise.fail(http.cause());
+          }
+        });
   }
 
   private void staticHandler(Router router) {
@@ -56,25 +59,36 @@ public class MainVerticle extends AbstractVerticle {
   private void setUpMongo() {
     // change this when working using ./gradlew run to be mongodb://localhost:27017
     JsonObject mongoconfig = new JsonObject() //
-      .put("connection_string", "mongodb://mongo:27017") //
-      .put("db_name", "friends");
+        .put("connection_string", "mongodb://mongo:27017") //
+        .put("db_name", "friends");
     client = MongoClient.create(vertx, mongoconfig);
   }
 
-  @Override
-  public void stop(Promise<Void> stop) {
-    client.dropCollection("friends", r -> {
-      if (r.succeeded()) {
-        System.out.println("SUCCESS: Collection dropped");
-      } else {
-        System.out.println("FAILED: Collection drop");
-      }
-      stop.complete();
-    });
-  }
+  // @Override
+  // public void stop(Promise<Void> stop) {
+  // client.dropCollection("friends", r -> {
+  // if (r.succeeded()) {
+  // System.out.println("SUCCESS: Collection dropped");
+  // } else {
+  // System.out.println("FAILED: Collection drop");
+  // }
+  // stop.complete();
+  // });
+  // }
 
   private void getFriends(RoutingContext routingContext) {
     JsonObject query = new JsonObject();
+    InetAddress ip;
+    String hostname;
+    try {
+      ip = InetAddress.getLocalHost();
+      hostname = ip.getHostName();
+      System.out.println("Your current IP address : " + ip);
+      System.out.println("Your current Hostname : " + hostname);
+      routingContext.data().put("hostname", hostname);
+    } catch (UnknownHostException e) {
+      e.printStackTrace();
+    }
     client.find("friends", query, res -> {
       routingContext.data().put("friends", res.result());
       routingContext.next();

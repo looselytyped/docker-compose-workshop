@@ -64,13 +64,7 @@ First, let us create a network
 docker network create my-net
 ```
 
-<<<<<<< HEAD
-Next we need to start up MongoDB in a container and attach it to the custom network
-
 ```shell
-=======
-``` shell
->>>>>>> feat: final iteration
 docker run --rm --name mongo -d --network my-net  mongo:3.4.5;
 # ensure it started up
 docker ps;

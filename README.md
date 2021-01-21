@@ -1,4 +1,4 @@
-# Docker workshop
+# Docker and Docker Compose workshop
 
 ## Highlights
 
@@ -9,7 +9,7 @@
 
 ## Installation
 
-You will need **2** things installed
+You will need **3** things installed
 
 - Docker
 - [Git](https://git-scm.com/downloads)
@@ -48,8 +48,8 @@ docker pull alpine:3.12;
 docker pull jenkins/jenkins:2.99;
 docker pull mongo:3.6.17;
 docker pull nginx:1.19.6-alpine;
-docker pull openjdk:8u131-jdk;
-docker pull openjdk:8u131-jre;
+docker pull openjdk:11.0.5-jdk;
+docker pull openjdk:11.0.5-jre;
 docker pull portainer/portainer:latest;
 docker pull tomcat:9;
 docker pull ubuntu:21.04;
@@ -97,5 +97,4 @@ See you soon!!!
 
 ## Notes
 
-- This project consists of a slew of Dockerfiles that demonstrate how to (and **not** to) use a few select Dockerfile instructions
 - This project also packages the artifact that this project produces so you do **not** need Java installed
