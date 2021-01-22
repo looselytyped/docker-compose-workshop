@@ -1,5 +1,8 @@
 package com.looselytyped;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
 import io.vertx.core.json.JsonObject;
@@ -9,9 +12,6 @@ import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.handler.TemplateHandler;
 import io.vertx.ext.web.templ.handlebars.HandlebarsTemplateEngine;
-
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 public class MainVerticle extends AbstractVerticle {
 

@@ -1,19 +1,14 @@
 ARG JDK_VERSION=11.0.5-jdk
 ARG JRE_VERSION=11.0.5-jre
 
-# ——— Base building image —————————————————————————————————————————————————————
-FROM openjdk:${JDK_VERSION} as base
-
-# ——— Get the dependencies ————————————————————————————————————————————————————
-FROM base as gradle
+# ——— Build/test ——————————————————————————————————————————————————————————————
+FROM openjdk:${JDK_VERSION} as builder
 WORKDIR /code
+
 COPY *.gradle gradle.* gradlew ./
 COPY gradle ./gradle
 RUN ./gradlew -q --no-daemon build || return 0
 
-# ——— Build/test ——————————————————————————————————————————————————————————————
-FROM gradle as builder
-WORKDIR /code
 COPY src/ src/
 RUN ["./gradlew", "-q", "--no-daemon", "clean", "shadowJar"]
 
