@@ -40,19 +40,16 @@ docker-compose version 1.27.4, build 40524192
 ## Warm up your engines!
 
 **You want to do this BEFORE you show up for the workshop!!**
-Running this over a hotel wifi connection might not go well.
 Using the command (bash) prompt:
 
 ```bash
-docker pull alpine:3.12;
-docker pull jenkins/jenkins:2.99;
-docker pull mongo:3.6.17;
-docker pull nginx:1.19.6-alpine;
-docker pull openjdk:11.0.5-jdk;
-docker pull openjdk:11.0.5-jre;
-docker pull portainer/portainer:latest;
-docker pull tomcat:9;
-docker pull ubuntu:21.04;
+docker image pull alpine:3.12;
+docker image pull jenkins/jenkins:2.99;
+docker image pull mongo:3.4.5;
+docker image pull nginx:1.19.6-alpine;
+docker image pull openjdk:11.0.5-jdk;
+docker image pull openjdk:11.0.5-jre;
+docker image pull ubuntu:21.04;
 ```
 
 ## The final test
