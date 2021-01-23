@@ -3,8 +3,8 @@ services:
   mongo:
     build:
       context: ../mongodb
-    ports:
-      - 27017:27017
+    expose:
+      - 27017
     networks:
       - service
     volumes:
