@@ -5,3 +5,8 @@ services:
       context: ../mongodb
     ports:
       - 27017:27017
+    volumes:
+      - mongo-drive:/data/db
+
+volumes:
+  mongo-drive:
