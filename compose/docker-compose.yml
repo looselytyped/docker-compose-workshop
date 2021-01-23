@@ -10,6 +10,15 @@ services:
     volumes:
       - mongo-drive:/data/db
 
+  app:
+    build:
+      context: ../friends-service
+      dockerfile: Dockerfile.multi
+    networks:
+      - service
+    ports:
+      - 8080:8080
+
 networks:
   service:
 
