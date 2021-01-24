@@ -14,17 +14,7 @@ services:
     build:
       context: ../friends-service
       dockerfile: Dockerfile.multi
-    command:
-      [
-        "/scripts/wait-for-it.sh",
-        "-t",
-        "0",
-        "mongo:27017",
-        "--",
-        "java",
-        "-jar",
-        "/var/app.jar",
-      ]
+    command: ["/scripts/startup.sh"]
     depends_on:
       - mongo
     expose:
