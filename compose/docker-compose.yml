@@ -15,12 +15,23 @@ services:
       context: ../friends-service
       dockerfile: Dockerfile.multi
     networks:
+      - frontend
       - service
+    expose:
+      - 8080
+
+  nginx:
+    image: nginx:1.19.6-alpine
     ports:
       - 8080:8080
+    networks:
+      - frontend
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
 
 networks:
   service:
+  frontend:
 
 volumes:
   mongo-drive:
