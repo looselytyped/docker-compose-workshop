@@ -30,7 +30,7 @@ services:
       - app
     image: nginx:1.19.6-alpine
     ports:
-      - 8080:8080
+      - ${PORT}:8080
     networks:
       - frontend
     volumes:
