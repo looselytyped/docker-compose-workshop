@@ -14,13 +14,17 @@ services:
     build:
       context: ../friends-service
       dockerfile: Dockerfile.multi
+    depends_on:
+      - mongo
+    expose:
+      - 8080
     networks:
       - frontend
       - service
-    expose:
-      - 8080
 
   nginx:
+    depends_on:
+      - app
     image: nginx:1.19.6-alpine
     ports:
       - 8080:8080
