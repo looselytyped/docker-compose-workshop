@@ -8,3 +8,5 @@ set -o errtrace
 set -o nounset
 # Catch the error in case mysqldump fails (but gzip succeeds) in `mysqldump |gzip`
 set -o pipefail
+
+/scripts/wait-for-it.sh -t 0 mongo:27017 -- java -jar /var/app.jar
